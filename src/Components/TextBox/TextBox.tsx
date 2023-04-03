@@ -1,24 +1,22 @@
 import { highlight, languages } from "prismjs";
 import Editor from "react-simple-code-editor";
 
-import "prismjs/themes/prism-tomorrow.css";
-import "./TextBox.css";
+import "./prism.css";
+import "./prism-dark.css";
 
-const TextBox = ({
-  className = "",
+export default function TextBox({
   value,
   onChange,
   isDarkTheme = false,
   language,
   disabled = false,
 }: {
-  className?: string;
   value: string;
   onChange: (value: string) => void;
   isDarkTheme?: boolean;
   language: string;
   disabled?: boolean;
-}) => {
+}) {
   const hightlightWithLineNumbers = (input: string, language: string) =>
     highlight(input, languages[language], language)
       .split("\n")
@@ -31,26 +29,24 @@ const TextBox = ({
       .join("\n");
 
   return (
-    <div className="max-h-[800px] overflow-scroll outline outline-1">
+    <div className="overflow-scroll outline outline-1 max-h-[800px]">
       <Editor
-        className={"editor focus: outline-none" + className}
         value={value}
         onValueChange={(code) => onChange(code)}
         placeholder="Paste your code here..."
         highlight={(code) => hightlightWithLineNumbers(code, language)}
         disabled={disabled}
-        textareaClassName="focus outline-none"
+        textareaClassName="focus outline-none !pl-[50px]"
+        preClassName={"!pl-[50px] " + (isDarkTheme ? "prism-dark" : "prism")}
         padding={10}
         style={{
           fontFamily: '"Fira code", "Fira Mono", monospace',
           fontSize: 12,
           minHeight: "400px",
-          backgroundColor: isDarkTheme ? "#1e1e1e" : "white",
-          color: isDarkTheme ? "white" : "black",
+          color: isDarkTheme ? "#fff" : "#000",
+          backgroundColor: isDarkTheme ? "#1e1e1e" : "#fff",
         }}
       />
     </div>
   );
-};
-
-export default TextBox;
+}

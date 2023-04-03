@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Select, Input, Switch, FormControl } from "@chakra-ui/react";
 
-import FormItem from "../../Components/Form/FormItem";
+import FormItem from "../../Components/FormItem";
 import postHandler from "../../Routes/postRoute";
 import { bodyContext } from "../../Contexts/BodyContext";
 import { syntaxContext } from "../../Contexts/SyntaxContext";
@@ -31,16 +31,11 @@ function PasteForm() {
     const error_element = document.getElementById("paste-url")!;
     if (url.status === 201) {
       error_element.style.color = "green";
-      error_element.innerHTML =
-        "Paste Created: " + url.data.url + "\nRedirecting...";
-      // sleep for 2 seconds
-      await new Promise((r) => setTimeout(r, 2000));
-      window.location.href = url.data.url;
+      error_element.innerHTML = "Paste Created: " + url.data.url;
     } else {
       console.log(url);
       error_element.innerHTML = "Body must not be empty!";
       error_element.style.color = "red";
-      // set color to red
     }
   };
 
